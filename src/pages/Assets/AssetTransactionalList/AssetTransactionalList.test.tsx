@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-import AssetTransactionalList from './AssetTransactionalListComponent'
+import AssetTransactionalList from './AssetTransactionalList'
 import { render, screen } from '../../../test/testUtils'
 
 describe('AssetWarrantyReport Component Testing', () => {

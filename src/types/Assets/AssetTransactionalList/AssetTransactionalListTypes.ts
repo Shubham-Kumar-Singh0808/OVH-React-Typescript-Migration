@@ -1,4 +1,5 @@
 import { LoadingState } from '../../commonTypes'
+import { AllAssetsList } from '../AssetList/AssetListTypes'
 
 export type AssetTransactionalList = {
   id: number
@@ -66,7 +67,7 @@ export type AssetTransactionListTableProps = {
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   isAssetTableView: boolean
   setToggle: React.Dispatch<React.SetStateAction<string>>
-  setEditAssetTransactionInfo: React.Dispatch<
+  setAssetTransactionInfo: React.Dispatch<
     React.SetStateAction<AssetTransactionalList>
   >
 }

@@ -34,7 +34,7 @@ const AssetTransactionalListTable = ({
   setCurrentPage,
   isAssetTableView,
   setToggle,
-  setEditAssetTransactionInfo,
+  setAssetTransactionInfo,
 }: AssetTransactionListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isAssetTransaction, setAssetTransaction] = useState<boolean>(false)
@@ -61,6 +61,16 @@ const AssetTransactionalListTable = ({
     setSpecification(assetTransactionSpecification)
   }
 
+  // const timelineButtonHandler = (id: number) => {
+  //   setToggle('/transactionalList')
+  //   dispatch(
+  //     reduxServices.assetList.getAllAssetHistoryData({
+  //       assetId: id,
+  //       searchAssetReference: '',
+  //     }),
+  //   )
+  // }
+
   // const handleExportEmployeeFinanceData = async () => {
   //   const contentElement = document.getElementById('transactionalExportId')
   //   if (contentElement) {
@@ -73,8 +83,8 @@ const AssetTransactionalListTable = ({
   //   }
   // }
 
-  const editButtonHandler = (vendorData: AssetTransactionalList) => {
-    setEditAssetTransactionInfo(vendorData)
+  const editButtonHandler = (assetTransactionData: AssetTransactionalList) => {
+    setAssetTransactionInfo(assetTransactionData)
     setToggle('transactionalList')
   }
 
@@ -216,11 +226,11 @@ const AssetTransactionalListTable = ({
 
                     <CTableDataCell data-testid="action-cell">
                       <div className="sh-btn-group">
-                        <CTooltip content="Edit">
+                        {/* <CTooltip content="Edit">
                           <CButton color="info" size="sm" className="mb-1">
                             <i className="fa fa-bar-chart text-white"></i>
                           </CButton>
-                        </CTooltip>
+                        </CTooltip> */}
 
                         <CTooltip content="Edit">
                           <CButton

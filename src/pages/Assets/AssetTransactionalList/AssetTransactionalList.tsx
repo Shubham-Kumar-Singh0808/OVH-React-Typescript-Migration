@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import AssetTransactionalListFilter from './AssetTransactionalListFilter'
 import AssetTransactionalListTable from './AssetTransactionalListTable'
-import AssetTransactionHistory from './AssetTransactionHistory/AssetTransactionHistory'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { AssetTransactionalList } from '../../../types/Assets/AssetTransactionalList/AssetTransactionalListTypes'
+import AssetTransactionHistory from '../AssetTransactionHistory/AssetTransactionHistory'
+// import { AssetTransactionalList } from '../../../types/Assets/AssetTransactionalList/AssetTransactionalListTypes'
 
-const AssetTransactionalListComponent = (): JSX.Element => {
-  const dispatch = useAppDispatch()
-  useEffect(() => {
-    dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
-  }, [dispatch])
+const AssetTransactionalList = (): JSX.Element => {
+  // const dispatch = useAppDispatch()
+  // useEffect(() => {
+  //   dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
+  // }, [dispatch])
 
   const [selectDatePicker, setselectDatePicker] =
     useState<string>('Current Month')
@@ -25,8 +26,7 @@ const AssetTransactionalListComponent = (): JSX.Element => {
   const [toggle, setToggle] = useState<string>('')
   const initialCycle = {} as AssetTransactionalList
 
-  const [editAssetTransactionInfo, setEditAssetTransactionInfo] =
-    useState(initialCycle)
+  const [assetTransactionInfo, setAssetTransactionInfo] = useState(initialCycle)
 
   const assetListSize = useTypedSelector(
     reduxServices.assetTransactionList.selectors.listSize,
@@ -82,19 +82,72 @@ const AssetTransactionalListComponent = (): JSX.Element => {
           setPageSize={setPageSize}
           isAssetTableView={isAssetTableView}
           setToggle={setToggle}
-          setEditAssetTransactionInfo={setEditAssetTransactionInfo}
+          setAssetTransactionInfo={setAssetTransactionInfo}
         />
       </OCard>
 
       {toggle === 'transactionalList' && (
         <AssetTransactionHistory
           setToggle={setToggle}
-          setEditAssetTransactionInfo={setEditAssetTransactionInfo}
-          editAssetTransactionInfo={editAssetTransactionInfo}
+          assetTransactionInfo={{
+            id: 0,
+            assetNumber: '',
+            productName: '',
+            pSpecification: '',
+            employeeName: '',
+            employeeId: null,
+            assignedDate: null,
+            description: '',
+            status: '',
+            date: '',
+            updatedBy: '',
+            location: '',
+            referenceNumber: '',
+            vendorName: '',
+            vendorId: null,
+            assetId: 0,
+            productId: null,
+            multipleSearch: null,
+            searchByEmpName: null,
+            locationForEmpAssets: null,
+            invoiceNumber: '',
+            amount: '',
+          }}
+          setAssetTransactionInfo={setAssetTransactionInfo}
+        />
+      )}
+      {toggle === 'transactionalList' && (
+        <AssetTransactionHistory
+          setToggle={setToggle}
+          setAssetTransactionInfo={setAssetTransactionInfo}
+          assetTransactionInfo={{
+            id: 0,
+            assetNumber: '',
+            productName: '',
+            pSpecification: '',
+            employeeName: '',
+            employeeId: null,
+            assignedDate: null,
+            description: '',
+            status: '',
+            date: '',
+            updatedBy: '',
+            location: '',
+            referenceNumber: '',
+            vendorName: '',
+            vendorId: null,
+            assetId: 0,
+            productId: null,
+            multipleSearch: null,
+            searchByEmpName: null,
+            locationForEmpAssets: null,
+            invoiceNumber: '',
+            amount: '',
+          }}
         />
       )}
     </>
   )
 }
 
-export default AssetTransactionalListComponent
+export default AssetTransactionalList

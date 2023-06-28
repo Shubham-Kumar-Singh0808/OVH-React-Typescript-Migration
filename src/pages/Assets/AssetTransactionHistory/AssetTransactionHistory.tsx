@@ -1,10 +1,10 @@
 import React, { RefAttributes, useState } from 'react'
 import { CRow, CCol, CButton, CFormInput, CInputGroup } from '@coreui/react-pro'
 import AssetTransactionHistoryTable from './AssetTransactionHistoryTable'
-import OCard from '../../../../components/ReusableComponent/OCard'
-import { reduxServices } from '../../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { AssetTransactionalList } from '../../../../types/Assets/AssetTransactionalList/AssetTransactionalListTypes'
+import OCard from '../../../components/ReusableComponent/OCard'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { AssetTransactionalList } from '../../../types/Assets/AssetTransactionalList/AssetTransactionalListTypes'
 
 const AssetTransactionHistory = ({
   setToggle,

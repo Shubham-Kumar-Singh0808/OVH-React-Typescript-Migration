@@ -9,12 +9,12 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useMemo } from 'react'
-import { useTypedSelector } from '../../../../stateStore'
-import { reduxServices } from '../../../../reducers/reduxServices'
-import { usePagination } from '../../../../middleware/hooks/usePagination'
-import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
-import OPagination from '../../../../components/ReusableComponent/OPagination'
-import { currentPageData } from '../../../../utils/paginationUtils'
+import { useTypedSelector } from '../../../stateStore'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { usePagination } from '../../../middleware/hooks/usePagination'
+import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../components/ReusableComponent/OPagination'
+import { currentPageData } from '../../../utils/paginationUtils'
 
 const AssetTransactionHistoryTable = (): JSX.Element => {
   const assetHistory = useTypedSelector(
