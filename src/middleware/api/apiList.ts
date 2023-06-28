@@ -119,6 +119,7 @@ import {
   AssetWarrantyReportApi,
   CategoryListApi,
   AssetListApi,
+  ChangeAssetStatusReportApi,
   ProductSpecificationListApi,
   CreditCardListApi,
   ExpenseSubCategoryListApi,
@@ -1117,6 +1118,11 @@ export const CandidateListApiConfig: CandidateListApi = {
 export const GetAssetListConfig: AssetListApi = {
   getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
   getAssetTypeChange: apiPrefix + '/assetManagement/getassetTypeChangeList',
+  getAllAssets: apiPrefix + '/assetManagement/getAllAssets',
+}
+
+export const changeAssetStatusConfig: ChangeAssetStatusReportApi = {
+  saveEmployee: apiPrefix + '/assetManagement/saveEmployee',
   getAllAssets: apiPrefix + '/assetManagement/getAllAssets',
 }
 export const ProductSpecificationListReportApiConfig: ProductSpecificationListApi =

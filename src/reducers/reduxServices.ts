@@ -128,6 +128,7 @@ import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlic
 import { categoryListService } from './ExpenseManagement/Category/expenseCategoryListSlice'
 import { addNewCategoryService } from './ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategorySlice'
 import { assetListService } from './Assets/AssetList/AssetListSlice'
+import { changeAssetStatusService } from './Assets/AssetList/ChangeStatus/ChangeStatusSlice'
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
 import { recruitmentHistoryServices } from './MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
@@ -269,6 +270,7 @@ export const reduxServices = {
   ProductTypeList: ProductTypeListService,
   assetList: assetListService,
   assetsWarrantyList: assetsWarrantyListService,
+  changeStatus: changeAssetStatusService,
   categoryList: categoryListService,
   addNewCategory: addNewCategoryService,
   productSpecificationList: productSpecificationListService,
